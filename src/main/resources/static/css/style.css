@@ -1,0 +1,23 @@
+header{
+    background-color: lightblue;
+    text-align: center;
+}
+th{
+    background-color: grey;
+}
+
+#ci{
+    background-color: brown;
+}
+button{
+    background-color: cadetblue;
+    border-color: cadetblue;
+}
+
+#title{
+    text-align: center; /* Centrer le texte */
+    text-decoration: underline; /* Souligner le texte */
+    color: blueviolet; /* Couleur rouge pour le texte */
+
+}
+

@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+    layout:decorate="~{layout}">
+
+<head>
+    <link rel="stylesheet" th:href="@{/css/style.css}" />
+    <link rel="stylesheet" th:href="@{/css/errorField.css}" />
+
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <main layout:fragment="content">
+
+
+        <h1 id="title" th:text="${student.nom}"></h1>
+
+
+        <h2 th:text="'-Matricule de l\'étudiant: ' + ${student.matricule}"></h2>
+
+        <h2 th:text="'-genre: '+${student.gender}"></h2>
+
+        <h2 th:text="'-section choisis: '+${student.section}"></h2>
+
+
+        <table>
+
+            <tr>
+                <th>Sigle</th>
+                <th>Titre</th>
+                <th>ECTS</th>
+                
+            </tr>
+
+            <tr th:each="course : ${student.courses}">
+                <td><a th:href="@{/courses/details/{id}(id=${course.id})}" th:text="${course.id}">Sigle</a>
+                </td>
+                <td th:text="${course.title}">Title</td>
+                <td th:text="${course.credits}">ECTS</td>
+            </tr>
+        </table>
+
+        
+        
+
+        <form th:action="@{/students/addCourse}" th:object="${coursesStudentDto}" method="post"> 
+            <!-- <form th:action="@{/students/addCourse}" method="post"> -->
+            <input type="text" name="courseId"  placeholder="courseId" />
+            <input type="hidden" name="studentId" th:value="${student.matricule}" />
+            <br>
+            <button>Ajouter</button>
+        </form>
+
+    </main>
+</body>
+
+</html>

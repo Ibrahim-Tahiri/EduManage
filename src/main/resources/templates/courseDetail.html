@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+    layout:decorate="~{layout}"><head>
+    <link rel="stylesheet" th:href="@{/css/style.css}" />
+    <link rel="stylesheet" th:href="@{/css/errorField.css}" />
+
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <main layout:fragment="content">
+        <h1 id="title" th:text="${course.title}"></h1>
+        <h2 th:text="'-id du cours: ' + ${course.id}"></h2>
+        
+        <h2 th:text="'-nombres de crédits du cours: '+${course.credits}"></h2>
+
+         <!-- <div th:replace="studentList :: studentList(${student})"></div>  -->
+
+         <table>
+            <tr>
+                <th>matricule</th>
+                <th>Nom</th>
+                <th>Gender</th>
+                <th>Section</th>
+            </tr>
+
+            <tr th:each="student : ${course.students}">
+                <td><a th:href="@{/courses/details/{id}(id=${course.id})}" th:text="${student.matricule}">matricule</a>
+                </td>
+                <td th:text="${student.nom}">nom</td>
+                <td th:text="${student.gender}">gender</td>
+                <td th:text="${student.section}">section</td>
+            </tr>
+        </table> 
+        
+        
+
+        <form th:action="@{/courses/addStudent}" th:object="${coursesStudentDto}" method="post">
+            <!-- <form th:action="@{/courses/addStudent}" method="post"> -->
+            <input type="text" name="studentId"  placeholder="studentId" />
+            <input type="hidden" name="courseId" th:value="${course.id}" />
+            <br>
+            <button>Ajouter</button>
+        </form>
+
+</main>
+</body>
+</html>

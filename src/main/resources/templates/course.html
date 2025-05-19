@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+    layout:decorate="~{layout}"><head>
+    <link rel="stylesheet" th:href="@{/css/style.css}" />
+    <link rel="stylesheet" th:href="@{/css/errorField.css}" />
+
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <main layout:fragment="content">
+
+    <div th:unless="${#lists.isEmpty(courses)}">
+        <table>
+            <tr>
+                <th>Sigle</th>
+                <th>Titre</th>
+                <th>ECTS</th>
+            </tr>
+            <tr th:each="course : ${courses}">
+                <td id="ci"  th:text="${course.id}"></td>
+                <td id="ct" ><a th:href="@{/courses/details/{id}(id=${course.id})}" th:text="${course.title}"></a></td>
+                <td id="cc" th:text="${course.credits}"></td>
+            </tr>
+        </table>
+    </div>
+    <div th:if="${#lists.isEmpty(courses)}">
+        Aucun cours
+    </div>
+
+    <div>
+        <form th:action="@{/courses/add}" th:object="${course}" method="post">
+            <input type="text" th:field="*{id}" th:errorclass="errorField"/>
+            <span th:errors="*{id}" class="errorMsg">erreur</span><br><br>
+
+            <input type="text" th:field="*{title}" th:errorclass="errorField"/>
+            <span th:errors="*{title}" class="errorMsg">erreur</span><br><br>
+
+
+            <input type="number" th:field="*{credits}" th:errorclass="errorField"/>
+            <span th:errors="*{credits}" class="errorMsg">erreur</span><br><br>
+
+            <button type="submit">Envoyer</button>
+            </form>
+    </div>
+</main>
+</body>
+</html>

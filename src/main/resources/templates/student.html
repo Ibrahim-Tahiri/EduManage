@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+    layout:decorate="~{layout}">
+
+<head>
+    <link rel="stylesheet" th:href="@{/css/style.css}" />
+    <link rel="stylesheet" th:href="@{/css/errorField.css}" />
+
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <main layout:fragment="content">
+        <br>
+        <div>
+            <form th:action="@{/students}" method="get">
+                <label for="filter">Filtrer par nom :</label>
+                <input type="text" id="filter" name="filter" th:value="${filter}" />
+                <button type="submit">Filtrer</button>
+            </form>
+        </div>
+        <br>
+
+         <!-- <div th:replace="studentList :: studentList(${students})"></div>  -->
+
+
+         <div th:unless="${#lists.isEmpty(students)}">
+            <table>
+                <tr>
+                    <th>Matricule</th>
+                    <th>Name</th>
+                    <th>Gender</th>
+                    <th>Section</th>
+                </tr>
+                <tr th:each="student : ${students}">
+                    <td id="ci" th:text="${student.matricule}"></td>
+
+                    <td id="ct"><a th:href="@{/students/details/{id}(id=${student.matricule})}"
+                            th:text="${student.nom}"></a></td>
+                    <td id="cc" th:text="${student.gender}"></td>
+                    <td id="cc" th:text="${student.section}"></td>
+                </tr>
+            </table>
+        </div>
+        <div th:if="${#lists.isEmpty(students)}">
+            Aucun Etudiant
+        </div>
+
+        <div>
+            <form th:action="@{/students/add}" th:object="${student}" method="post">
+                <!-- <input type="text" th:field="*{matricule}" th:errorclass="errorField"/>
+            <span th:errors="*{matricule}" class="errorMsg">erreur</span><br><br> -->
+
+                <input type="text" th:field="*{nom}" th:errorclass="errorField" />
+                <span th:errors="*{nom}" class="errorMsg">erreur</span><br><br>
+
+                <label>Genre:</label>
+                <select th:field="*{gender}">
+                    <option th:value="MALE">Masculin</option>
+                    <option th:value="FEMALE">Féminin</option>
+                </select><br />
+
+                <label>Section:</label>
+                <select th:field="*{section}">
+                    <option th:value="GESTION">Gestion</option>
+                    <option th:value="INDUSTRIELLE">industrielle</option>
+                    <option th:value="RESEAU">Reseau</option>
+                </select><br />
+
+                <button type="submit">Envoyer</button>
+            </form>
+        </div>
+    </main>
+</body>
+
+</html>

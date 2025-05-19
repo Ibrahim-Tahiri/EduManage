@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Student List Fragment</title>
+</head>
+<body>
+<div th:fragment="studentList(students)">
+    <div th:unless="${#lists.isEmpty(students)}">
+        <table>
+            <tr>
+                <th>Matricule</th>
+                <th>Name</th>
+                <th>Gender</th>
+                <th>Section</th>
+            </tr>
+            <tr th:each="student : ${students}">
+                <td id="ci" th:text="${student.matricule}"></td>
+                <!-- <td id="ct" th:text="${student.nom}"></td> -->
+
+                <td id="ct"><a th:href="@{/students/details/{id}(id=${student.matricule})}"
+                        th:text="${student.nom}"></a></td>
+                <td id="cc" th:text="${student.gender}"></td>
+                <td id="cc" th:text="${student.section}"></td>
+            </tr>
+        </table>
+    </div>
+    <div th:if="${#lists.isEmpty(students)}">
+        Aucun Etudiant
+    </div>
+</div>
+</body>
+</html>
